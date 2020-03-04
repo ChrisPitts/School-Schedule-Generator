@@ -19,10 +19,10 @@ class CourseReader:
         for element in menu_elements:
             subject_text.append(element.text)
 
-        subjectstr = self.prompt_list(SUBJECT_LABEL, subject_text)
+        subject_str = self.prompt_list(SUBJECT_LABEL, subject_text)
         subject_menu = Select(
             self.browser.find_element_by_xpath('/html/body/div[3]/form/table[1]/tbody/tr/td[2]/select'))
-        subject_menu.select_by_visible_text(subjectstr)
+        subject_menu.select_by_visible_text(subject_str)
         self.browser.find_element_by_xpath('/html/body/div[3]/form/input[17]').click()
 
         course_data = []
@@ -43,7 +43,8 @@ class CourseReader:
 
         subject = self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[3]/td[3]').text
         number = self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[3]/td[4]').text
-        course = Course(subject, number)
+        name = self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[3]/td[8]').text
+        course = Course(subject, number, name)
 
         for i in range(3, len(self.browser.find_elements(By.XPATH, '/html/body/div[3]/form/table/tbody/tr'))+1):
             arr = []
@@ -59,15 +60,26 @@ class CourseReader:
             arr.append(self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[%i]/td[17]' % i).text)
             arr.append(self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[%i]/td[19]' % i).text)
             course.add_section(arr)
-        course.print()
-        input("Press enter to continue")
 
-        # window = Tk()
-        # Label(window, text=SUBJECT_LABEL).grid(row=0, column=0, sticky='W')
-        # selection = StringVar(window, subject_text[0])
-        # OptionMenu(window, selection, *subject_text).grid(row=1, column=0, sticky='W')
-        # Button(window, text=SUBMIT_BUTTON_TEXT, command=lambda:self.show_classes(window, selection)).grid(row=2, column=0, sticky='W')
-        # window.mainloop()
+        window = Tk()
+        Label(window, text="%s %s %s" % (course.subject, course.number, course.name)).grid(row=0, column=0, sticky='W')
+        i = 0
+        for key in course.sections:
+            section = course.sections[key]
+            Label(window, text=section.status).grid(row=i+1, column=0, sticky='W')
+            Label(window, text=section.course_number).grid(row=i + 1, column=1, sticky='W')
+            Label(window, text=section.section_number).grid(row=i + 1, column=2, sticky='W')
+            Label(window, text=section.campus).grid(row=i + 1, column=3, sticky='W')
+            Label(window, text=section.days).grid(row=i + 1, column=4, sticky='W')
+            Label(window, text=section.times).grid(row=i + 1, column=5, sticky='W')
+            Label(window, text=section.capacity).grid(row=i + 1, column=6, sticky='W')
+            Label(window, text=section.remaining).grid(row=i + 1, column=7, sticky='W')
+            Label(window, text=section.instructor).grid(row=i + 1, column=8, sticky='W')
+            Label(window, text=section.location).grid(row=i + 1, column=9, sticky='W')
+            i = i + 1
+        window.mainloop()
+
+        input("Press enter to continue")
 
     def prompt_list(self, label, strings):
         ret_str = ''
@@ -83,5 +95,3 @@ class CourseReader:
         Button(window, text=SUBMIT_BUTTON_TEXT, command=submit).grid(row=2, column=0, sticky='W')
         window.mainloop()
         return ret_str
-
-
