@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.chrome.options import Options
 from tkinter import *
 import time
 from course_reader import CourseReader
@@ -14,7 +15,9 @@ class WindowInit:
 
     def __init__(self):
         # Open self service
-        self.browser = webdriver.Chrome('C:/Users/cp253/OneDrive/Documents/chromedriver')
+        browser_options = Options()
+        browser_options.add_argument("--headless")
+        self.browser = webdriver.Chrome('C:/Users/cp253/OneDrive/Documents/chromedriver', options=browser_options)
         self.browser.get("https://ssb.txstate.edu/prod/twbkwbis.P_WWWLogin")
 
         username = ''

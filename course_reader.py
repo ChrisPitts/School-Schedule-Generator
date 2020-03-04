@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from tkinter import *
 import time
+from Course import Course
 
 SUBMIT_BUTTON_TEXT = 'Submit'
 SUBJECT_LABEL = 'Select a subject'
@@ -39,6 +40,26 @@ class CourseReader:
 
         course_str = self.prompt_list("Select course", course_strings)
         course_data[course_strings.index(course_str)][2].click()
+
+        subject = self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[3]/td[3]').text
+        number = self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[3]/td[4]').text
+        course = Course(subject, number)
+
+        for i in range(3, len(self.browser.find_elements(By.XPATH, '/html/body/div[3]/form/table/tbody/tr'))+1):
+            arr = []
+            arr.append(self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[%i]/td[1]/abbr' % i)
+                       .text)
+            arr.append(self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[%i]/td[2]' % i).text)
+            arr.append(self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[%i]/td[5]' % i).text)
+            arr.append(self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[%i]/td[6]' % i).text)
+            arr.append(self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[%i]/td[9]' % i).text)
+            arr.append(self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[%i]/td[10]' % i).text)
+            arr.append(self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[%i]/td[11]' % i).text)
+            arr.append(self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[%i]/td[13]' % i).text)
+            arr.append(self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[%i]/td[17]' % i).text)
+            arr.append(self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[%i]/td[19]' % i).text)
+            course.add_section(arr)
+        course.print()
         input("Press enter to continue")
 
         # window = Tk()
