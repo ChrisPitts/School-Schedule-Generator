@@ -16,7 +16,7 @@ class WindowInit:
     def __init__(self):
         # Open self service
         browser_options = Options()
-        browser_options.add_argument("--headless")
+        #browser_options.add_argument("--headless")
         self.browser = webdriver.Chrome('C:/Users/cp253/OneDrive/Documents/chromedriver', options=browser_options)
         self.browser.get("https://ssb.txstate.edu/prod/twbkwbis.P_WWWLogin")
 
