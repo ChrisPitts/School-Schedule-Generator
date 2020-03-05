@@ -1,7 +1,7 @@
 from tkinter import *
 from Course import Course
 from Section import Section
-import data_manager
+# import data_manager
 
 
 class WindowSchedule:
