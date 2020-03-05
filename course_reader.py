@@ -25,7 +25,7 @@ class CourseReader:
 
             subject_str = self.prompt_list(SUBJECT_LABEL, subject_text)
 
-            if subject_str == 'Exit':
+            if subject_str == 'Back' or subject_str == 'Exit':
                 return
             subject_menu = Select(
                 self.browser.find_element_by_xpath('/html/body/div[3]/form/table[1]/tbody/tr/td[2]/select'))
@@ -48,9 +48,15 @@ class CourseReader:
                 course_strings.append('%s %s' % (course_data[i][0].text, course_data[i][1].text))
 
             course_str = self.prompt_list("Select course", course_strings)
+            if course_str == 'Back':
+                self.browser.back()
+                Select(
+                    self.browser.find_element_by_xpath('/html/body/div[3]/form/table[1]/tbody/tr/td[2]/select')).\
+                    deselect_all()
+                prompt_subject()
+                return
             if course_str == 'Exit':
                 self.browser.back()
-                prompt_subject()
                 return
             course_data[course_strings.index(course_str)][2].click()
 
@@ -63,6 +69,11 @@ class CourseReader:
                 self.browser.back()
                 window.destroy()
                 prompt_course()
+
+            def exit_menu():
+                self.browser.back()
+                self.browser.back()
+                window.destroy()
 
             subject = self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[3]/td[3]').text
             number = self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr[3]/td[4]').text
@@ -114,7 +125,8 @@ class CourseReader:
                 Label(window, text=section.instructor).grid(row=i, column=9, sticky='W')
                 Label(window, text=section.location).grid(row=i, column=10, sticky='W')
                 i = i + 1
-            Button(window, text=EXIT_BUTTON_TEXT, command=back).grid(row=i, column=0, sticky='W')
+            Button(window, text=BACK_BUTTON_TEXT, command=back).grid(row=i, column=0, sticky='W')
+            Button(window, text=EXIT_BUTTON_TEXT, command=exit_menu).grid(row=i, column=1, sticky='W')
             window.mainloop()
 
         prompt_subject()
@@ -125,6 +137,8 @@ class CourseReader:
         def submit(status):
             nonlocal ret_str
             if status == 1:
+                ret_str = 'Back'
+            elif status == 2:
                 ret_str = 'Exit'
             else:
                 ret_str = str_var.get()
@@ -134,10 +148,11 @@ class CourseReader:
         Label(window, text=label).grid(row=0, column=0, sticky='W')
         OptionMenu(window, str_var, *strings).grid(row=1, column=0, sticky='W')
         Button(window, text=SUBMIT_BUTTON_TEXT, command=lambda: submit(0)).grid(row=2, column=0, sticky='W')
-        Button(window, text=EXIT_BUTTON_TEXT, command=lambda: submit(1)).grid(row=2, column=1, sticky='W')
-        print("Creating window")
+        Button(window, text=BACK_BUTTON_TEXT, command=lambda: submit(1)).grid(row=2, column=1, sticky='W')
+        Button(window, text=EXIT_BUTTON_TEXT, command=lambda: submit(2)).grid(row=2, column=2, sticky='W')
+        
         window.mainloop()
-        print("ret_str = %s" % ret_str)
+
         return ret_str
 
     def select_section(self, section, window):
