@@ -1,3 +1,4 @@
+file_name = ''
 courses = dict()
 selected_sections = dict()
 

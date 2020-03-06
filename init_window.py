@@ -6,6 +6,7 @@ from tkinter import *
 import time
 from course_reader import CourseReader
 from Schedule_Window import WindowSchedule
+import data_manager
 
 LOG_IN_TEXT = "Log into self service"
 LOGGED_IN_BUTTON_TEXT = "Log in"
@@ -80,6 +81,7 @@ class WindowInit:
     def finish_init(self, term):
         dropdown = Select(self.browser.find_element_by_xpath('/html/body/div[3]/form/table/tbody/tr/td/select'))
         termstr = term.get()
+        data_manager.file_name = termstr + '.txt'
         dropdown.select_by_visible_text(termstr)
         self.browser.find_element_by_xpath('/html/body/div[3]/form/input[2]').click()
         self.window.destroy()
