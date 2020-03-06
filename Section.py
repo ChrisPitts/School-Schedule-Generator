@@ -23,7 +23,7 @@ class Section:
         times.append(hour*60 + minutes)
 
         time_str = self.times[self.times.index('-') + 1:]
-        print(time_str)
+        #print(time_str)
         hour = int(time_str[: self.times.index(':')])
         minutes = int(time_str[self.times.index(':') + 1: time_str.index(' ')])
         am_pm = time_str[time_str.index(' ') + 1:]
