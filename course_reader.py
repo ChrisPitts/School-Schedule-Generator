@@ -9,6 +9,7 @@ SUBMIT_BUTTON_TEXT = 'Submit'
 EXIT_BUTTON_TEXT = 'Exit'
 BACK_BUTTON_TEXT = 'Back'
 SUBJECT_LABEL = 'Select a subject'
+ADD_COURSE_BUTTON_TEXT = "Add Course"
 
 
 class CourseReader:
@@ -125,8 +126,9 @@ class CourseReader:
                 Label(window, text=section.instructor).grid(row=i, column=9, sticky='W')
                 Label(window, text=section.location).grid(row=i, column=10, sticky='W')
                 i = i + 1
-            Button(window, text=BACK_BUTTON_TEXT, command=back).grid(row=i, column=0, sticky='W')
-            Button(window, text=EXIT_BUTTON_TEXT, command=exit_menu).grid(row=i, column=1, sticky='W')
+            Button(window, text=ADD_COURSE_BUTTON_TEXT, command=self.add_course).grid(row=i, column=0, sticky='W')
+            Button(window, text=BACK_BUTTON_TEXT, command=back).grid(row=i, column=1, sticky='W')
+            Button(window, text=EXIT_BUTTON_TEXT, command=exit_menu).grid(row=i, column=2, sticky='W')
             window.mainloop()
 
         prompt_subject()
@@ -160,3 +162,6 @@ class CourseReader:
         window.destroy()
         section.course.display = False
         print("Selected section %s %s.%s" % (section.course.subject, section.course.number, section.section_number))
+
+    def add_course(self, course):
+        pass
