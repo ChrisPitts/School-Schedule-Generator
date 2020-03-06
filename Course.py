@@ -21,8 +21,10 @@ class Course:
         self.sections[section.course_number] = section
 
     def print(self):
-        for section in self.sections:
+        for s in self.sections:
             print("%s %s.%s\tStatus: %s\tCRN: %s\tCampus: %s\tDays: %s\tTimes: %s\tCapacity: %s\t"
                   "Remaining: %s\tInstructor: %s\tLocation: %s" %
-                  (self.subject, self.number, section.section_number, section.status, section.course_number, section.campus, section.days, section.times, section.capacity,
-                   section.remaining, section.instructor, section.location))
+                  (self.subject, self.number, self.sections[s].section_number, self.sections[s].status,
+                   self.sections[s].course_number, self.sections[s].campus, self.sections[s].days, self.sections[s].times,
+                   self.sections[s].capacity, self.sections[s].remaining, self.sections[s].instructor,
+                   self.sections[s].location))
