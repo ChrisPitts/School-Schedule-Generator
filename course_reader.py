@@ -24,7 +24,7 @@ class CourseReader:
                 subject_text.append(element.text)
 
             subject_str = self.prompt_list(SUBJECT_LABEL, subject_text)
-
+            print("line 27 reached")
             if subject_str == 'Back' or subject_str == 'Exit':
                 return
             subject_menu = Select(
@@ -142,6 +142,7 @@ class CourseReader:
                 ret_str = 'Exit'
             else:
                 ret_str = str_var.get()
+            window.quit()
             window.destroy()
         window = Tk()
         str_var = StringVar(window, strings[0])
@@ -152,7 +153,7 @@ class CourseReader:
         Button(window, text=EXIT_BUTTON_TEXT, command=lambda: submit(2)).grid(row=2, column=2, sticky='W')
         
         window.mainloop()
-
+        print("Line 155 reached")
         return ret_str
 
     def select_section(self, section, window):
