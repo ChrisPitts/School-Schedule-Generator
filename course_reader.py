@@ -5,11 +5,12 @@ from tkinter import *
 import time
 from Course import Course
 
+
 SUBMIT_BUTTON_TEXT = 'Submit'
 EXIT_BUTTON_TEXT = 'Exit'
 BACK_BUTTON_TEXT = 'Back'
 SUBJECT_LABEL = 'Select a subject'
-ADD_COURSE_BUTTON_TEXT = "Add Course"
+ADD_SECTIONS_BUTTON_TEXT = "Add Sections"
 
 
 class CourseReader:
@@ -110,11 +111,14 @@ class CourseReader:
             window = Tk()
             Label(window, text="%s %s %s" % (course.subject, course.number, course.name)).grid(row=0, column=0,
                                                                                                sticky='W')
-            i = 1
+            sections = []
+            box_vars = []
             for key in course.sections:
                 section = course.sections[key]
-                Button(window, text="Select Section", command=lambda s=section: self.select_section(s, window)). \
-                    grid(row=i, column=0, sticky='W')
+                sections.append(sections)
+                box_var = IntVar()
+                box_vars.append(box_var)
+                Checkbutton(window, variable=box_var).grid(row=i, column=0, sticky='W')
                 Label(window, text=section.status).grid(row=i, column=1, sticky='W')
                 Label(window, text=section.course_number).grid(row=i, column=2, sticky='W')
                 Label(window, text=section.section_number).grid(row=i, column=3, sticky='W')
@@ -126,7 +130,8 @@ class CourseReader:
                 Label(window, text=section.instructor).grid(row=i, column=9, sticky='W')
                 Label(window, text=section.location).grid(row=i, column=10, sticky='W')
                 i = i + 1
-            Button(window, text=ADD_COURSE_BUTTON_TEXT, command=self.add_course).grid(row=i, column=0, sticky='W')
+            Button(window, text=ADD_SECTIONS_BUTTON_TEXT, command=lambda: self.add_sections(sections, box_vars)).\
+                grid(row=i, column=0, sticky='W')
             Button(window, text=BACK_BUTTON_TEXT, command=back).grid(row=i, column=1, sticky='W')
             Button(window, text=EXIT_BUTTON_TEXT, command=exit_menu).grid(row=i, column=2, sticky='W')
             window.mainloop()
@@ -158,10 +163,8 @@ class CourseReader:
         print("Line 155 reached")
         return ret_str
 
-    def select_section(self, section, window):
-        window.destroy()
-        section.course.display = False
-        print("Selected section %s %s.%s" % (section.course.subject, section.course.number, section.section_number))
 
-    def add_course(self, course):
-        pass
+    def add_sections(self, sections, vars):
+        for i in range(0, len(vars)):
+            if vars[i].get() == 1:
+                pass
