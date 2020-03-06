@@ -4,12 +4,11 @@ from Section import Section
 import data_manager
 from schedule_frame import FrameSchedule
 
-
+ADD_COURSE_BUTTON_TEXT = "Add Course"
 class WindowSchedule:
 
-    def __init__(self):
-        #self.reader = reader
-        #reader.lookup_class()
+    def __init__(self, reader):
+        self.reader = reader
         self.window = Tk()
 
         # Set up course list frame
@@ -45,64 +44,67 @@ class WindowSchedule:
 
 
         # Set up buttons frame
+        self.button_frame = Frame(self.window, bd=1, relief=RIDGE)
+        self.button_frame.grid(row=3, column=0, sticky='W')
+        Button(self.button_frame, text=ADD_COURSE_BUTTON_TEXT, command=lambda: reader.lookup_class()).\
+            grid(row=0, column=0, sticky='W')
 
         for course in data_manager.courses:
             for section in data_manager.courses[course].sections:
                 section = data_manager.courses[course].sections[section]
-                #section.print()
                 self.schedule_frame.add_section(section)
 
         self.window.mainloop()
 
 
-course_1_array = [
-    'O',
-    '23135',
-    '003',
-    'M',
-    'MWF',
-    '08:00 am-09:20 am',
-    '30',
-    '25',
-    'Jack Harris (P)',
-    'DERR 242'
-]
-
-course_2_array = [
-    'O',
-    '23465',
-    '252',
-    'M',
-    'TH',
-    '12:00 pm-01:20 pm',
-    '200',
-    '150',
-    'James Erikson (P)',
-    'INGM 320'
-]
-
-course_3_array = [
-    'O',
-    '23466',
-    '632',
-    'M',
-    'TH',
-    '12:30 pm-01:50 pm',
-    '200',
-    '150',
-    'James Erikson (P)',
-    'INGM 320'
-]
-
-course = Course('CS', '2336', "Computer Science 1")
-course.add_section(course_1_array)
-data_manager.add_course(course)
-#course.print()
-course = Course('MATH', '2413', "Calculus 1")
-course.add_section(course_2_array)
-course.add_section(course_3_array)
-data_manager.add_course(course)
-#course.print()
-
-
-schedule = WindowSchedule()
+# course_1_array = [
+#     'O',
+#     '23135',
+#     '003',
+#     'M',
+#     'MWF',
+#     '08:00 am-09:20 am',
+#     '30',
+#     '25',
+#     'Jack Harris (P)',
+#     'DERR 242'
+# ]
+#
+# course_2_array = [
+#     'O',
+#     '23465',
+#     '252',
+#     'M',
+#     'TH',
+#     '12:00 pm-01:20 pm',
+#     '200',
+#     '150',
+#     'James Erikson (P)',
+#     'INGM 320'
+# ]
+#
+# course_3_array = [
+#     'O',
+#     '23466',
+#     '632',
+#     'M',
+#     'TH',
+#     '12:30 pm-01:50 pm',
+#     '200',
+#     '150',
+#     'James Erikson (P)',
+#     'INGM 320'
+# ]
+#
+# course = Course('CS', '2336', "Computer Science 1")
+# course.add_section(course_1_array)
+# data_manager.add_course(course)
+# #course.print()
+# course = Course('MATH', '2413', "Calculus 1")
+# course.add_section(course_2_array)
+# course.add_section(course_3_array)
+# data_manager.add_course(course)
+# #course.print()
+#
+#
+# schedule = WindowSchedule()
