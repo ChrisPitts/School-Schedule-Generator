@@ -48,7 +48,9 @@ class WindowSchedule:
 
         for course in data_manager.courses:
             for section in data_manager.courses[course].sections:
-                self.schedule_frame.draw(data_manager.courses[course].sections[section])
+                section = data_manager.courses[course].sections[section]
+                #section.print()
+                self.schedule_frame.add_section(section)
 
         self.window.mainloop()
 
@@ -59,7 +61,7 @@ course_1_array = [
     '003',
     'M',
     'MWF',
-    '08:00 am-10:50 am',
+    '08:00 am-09:20 am',
     '30',
     '25',
     'Jack Harris (P)',
@@ -72,7 +74,7 @@ course_2_array = [
     '252',
     'M',
     'TH',
-    '12:00 pm-1:50 pm',
+    '12:00 pm-01:50 pm',
     '200',
     '150',
     'James Erikson (P)',
@@ -81,11 +83,11 @@ course_2_array = [
 
 course_3_array = [
     'O',
-    '23465',
-    '252',
+    '23466',
+    '632',
     'M',
     'TH',
-    '6:00 pm-7:20 pm',
+    '06:00 pm-07:20 pm',
     '200',
     '150',
     'James Erikson (P)',
@@ -95,10 +97,12 @@ course_3_array = [
 course = Course('CS', '2336', "Computer Science 1")
 course.add_section(course_1_array)
 data_manager.add_course(course)
+#course.print()
 course = Course('MATH', '2413', "Calculus 1")
 course.add_section(course_2_array)
 course.add_section(course_3_array)
 data_manager.add_course(course)
+#course.print()
 
 
 schedule = WindowSchedule()
